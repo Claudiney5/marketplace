@@ -1,4 +1,4 @@
-import os  #  miscellaneous operating system interfaces
+import os  # miscellaneous operating system interfaces
 import pandas as pd
 import sqlalchemy 
 
@@ -9,24 +9,23 @@ host = 'database-1.fim_do_mundo.us-east.rds.ficcao.amazonaws.com' # ip/host/dns
 port = '3306' # port
 bd_str_connection = 'mysql+pymysql://{user}:{password}@{host}:{port}'"""
 
-# para BANCO DE DADOS sqlite
-str_connection = 'sqlite:///{path}'
-
-BASE_DIR = os.path.dirname(os.path.abspath('__file__')) # 'path.dirname' = diretório pai
-DATA_DIR = os.path.join(BASE_DIR, 'data')  #  'join' une os argumentos
+# endereços do projeto
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath('__file__')))  # 'path.dirname' = diretório pai
+DATA_DIR = os.path.join(BASE_DIR, 'data')  # 'join' une os argumentos
 
 # CAPTURANDO APENAS OS ARQUIVOS .csv DA PASTA DATA_DIR
-## Forma 1
+# # Forma 1
 '''files_names = os.listdir(DATA_DIR)  # 'listdir' lista tudo o que ele encontra no diretório
 correct_files = []
 for i in files_names:
     if i.endswith('.csv'):
         correct_files.append(i)'''
 
-## Forma 2 (Pythônica - list comprehesion ou compressão de lista)
+# # Forma 2 (Pythônica - list comprehesion ou compressão de lista)
 files_names = [i for i in os.listdir(DATA_DIR) if i.endswith('.csv')]
 
 # ABRINDO a conexão com o banco de dados
+str_connection = 'sqlite:///{path}'    # para BANCO DE DADOS sqlite
 connection = sqlalchemy.create_engine(
     str_connection.format(path=os.path.join(DATA_DIR, 'olist.db')))
 
